@@ -1,0 +1,3 @@
+#Description
+
+Activity Tracker is a full-stack web application that helps users log and monitor their physical activities and workouts. Users can choose from a predefined list of popular activities or create their own custom activities, which are saved for future use. The app provides dynamic forms that adapt to the selected activity type, allowing users to track relevant information such as distance or duration. Each user has a personal account with secure authentication, ensuring that activity data remains private and accessible across sessions. The application is built using React for the frontend, Node.js and Express for the backend, and MongoDB with Mongoose for data storage and management
