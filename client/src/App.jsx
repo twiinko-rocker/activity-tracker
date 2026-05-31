@@ -1,25 +1,24 @@
-import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+
+const Dashboard = () => <h1>Dashboard (Protected)</h1>;
+const Login = () => <h1>Login Page</h1>;
+const Register = () => <h1>Register Page</h1>;
 
 function App() {
-  const [status, setStatus] = useState(""); //| State to hold the status from the server
-
-  useEffect(() => { 
-    fetch("http://localhost:3000/api/health") //| Fetch the health status from the server
-      .then((response) => response.json()) 
-      .then((data) => {
-        setStatus(data.status);
-      })
-      .catch((error) => {
-        console.error(error);
-      }); 
-  }, []);
-
   return (
-    <div>
-      <h1>Activity Tracker</h1>
-      <p>Status: {status}</p>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
