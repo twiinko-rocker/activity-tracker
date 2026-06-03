@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const Dashboard = () => <h1>Dashboard (Protected)</h1>;
-const Login = () => <h1>Login Page</h1>;
-const Register = () => <h1>Register Page</h1>;
 
 function App() {
   return (
