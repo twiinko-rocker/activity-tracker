@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
@@ -17,16 +17,21 @@ function Login() {
 
   const [errors, setErrors] = useState({});
 
-  function handleChange(e) {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  const validationErrors = useMemo(() => {
     const result = schema.safeParse(formData);
-    if (!result.success) {
-      setErrors(result.error.flatten().fieldErrors);
+    if (!result.success) return result.error.flatten().fieldErrors;
+    return {};
+  }, [formData]);
+
+  const handleSubmit = useCallback(async (event) => {
+    event.preventDefault();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
@@ -46,7 +51,7 @@ function Login() {
       const data = await response.json();
       setErrors({ server: data.message });
     }
-  }
+  }, [formData, validationErrors, navigate]);
 
   return (
     <div>

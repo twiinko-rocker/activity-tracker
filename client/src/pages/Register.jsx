@@ -1,65 +1,59 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { z } from "zod"
+import { z } from "zod";
 
 const schema = z.object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-})
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
 
-function Register() { 
-    const navigate = useNavigate();
+function Register() {
+  const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-    })
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-    const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
 
-    function handleChange(e) {
-        const { name, value } = e.target;
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    }
-
-    async function handleSubmit(event) {
-    event.preventDefault();
+  const validationErrors = useMemo(() => {
     const result = schema.safeParse(formData);
-    if (!result.success) {
-        setErrors(result.error.flatten().fieldErrors);
-        return;
+    if (!result.success) return result.error.flatten().fieldErrors;
+    return {};
+  }, [formData]);
+
+  const handleSubmit = useCallback(async (event) => {
+    event.preventDefault();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
     }
 
     setErrors({});
 
     const response = await fetch("http://localhost:3000/api/auth/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
     });
-    
-if (response.ok) {
-  navigate("/login");
-} else {
-  const data = await response.json();
-  setErrors({ server: data.message });
-}
-}
 
-
-
-
+    if (response.ok) {
+      navigate("/login");
+    } else {
+      const data = await response.json();
+      setErrors({ server: data.message });
+    }
+  }, [formData, validationErrors, navigate]);
 
   return (
-
     <div>
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
@@ -99,8 +93,5 @@ if (response.ok) {
     </div>
   );
 }
-
-
-
 
 export default Register;
