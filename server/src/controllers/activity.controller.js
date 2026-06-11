@@ -28,3 +28,18 @@ export async function getActivities(req, res) {
 
 
 }
+
+export async function deleteActivity(req, res) {
+    try {
+        const { id } = req.params;
+        const userId = req.user.id;
+
+        const activity = await Activity.findOneAndDelete({ _id: id, user: userId });
+
+        if (!activity) return res.status(404).json({ message: "Activity not found" });
+
+        res.status(200).json({ message: "Activity deleted" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting activity" });
+    }
+}

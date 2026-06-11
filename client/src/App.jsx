@@ -3,13 +3,27 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import LogActivity from './pages/LogActivity';
+import { ActivityList } from './components/ActivityList';
+import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => (
-  <div>
-    <h1>Dashboard</h1>
-    <a href="/log-activity">Log Activity</a>
-  </div>
-);
+
+const Dashboard = () => {
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <button onClick={handleLogout}>Logout</button>
+      <a href="/log-activity">Log Activity</a>
+      <ActivityList />
+    </div>
+  );
+};
 
 function App() {
   return (
