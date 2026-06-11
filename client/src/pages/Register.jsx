@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import '../styles/pages.css';
 
 const schema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -54,10 +55,10 @@ function Register() {
   }, [formData, validationErrors, navigate]);
 
   return (
-    <div>
+    <div className="page">
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Name</label>
           <input
             type="text"
@@ -67,7 +68,7 @@ function Register() {
           />
           {errors.name && <p>{errors.name[0]}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Email</label>
           <input
             type="email"
@@ -77,7 +78,7 @@ function Register() {
           />
           {errors.email && <p>{errors.email[0]}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Password</label>
           <input
             type="password"
@@ -89,6 +90,7 @@ function Register() {
         </div>
         {errors.server && <p>{errors.server}</p>}
         <button type="submit">Create account</button>
+        <p>Already have an account? <a href="/login">Login here</a></p>
       </form>
     </div>
   );
