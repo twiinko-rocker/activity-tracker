@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import '../styles/pages.css';
+
+
 
 const activityOptions = [
   { activity: "Running", hasDistance: true },
@@ -20,6 +24,7 @@ function LogActivity() {
   const [distance, setDistance] = useState("");
   const [date, setDate] = useState(today);
   const [notes, setNotes] = useState("");
+  const navigate = useNavigate();
 
   const selectedOption = activityOptions.find(
     (activity) => activity.activity === selectedActivity
@@ -64,6 +69,7 @@ function LogActivity() {
       setDistance("");
       setDate(today);
       setNotes("");
+      navigate("/dashboard")
     } else {
       const data = await response.json();
       alert(`Error saving activity: ${data.message}`);
@@ -71,7 +77,7 @@ function LogActivity() {
   }
 
   return (
-    <div>
+    <div className="page">
       <h1>Log Activity</h1>
 
       <form onSubmit={handleSubmit}>

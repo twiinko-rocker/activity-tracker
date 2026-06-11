@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import '../styles/pages.css';
 
 export const ActivityList = () => {
     const [activities, setActivities] = useState([]);
@@ -42,11 +43,11 @@ export const ActivityList = () => {
 
 
     return (
-        <div>
+        <div className="activity-info">
             <h2>Your Activities</h2>
 
             {activities.map((activity) => (
-                <div key={activity._id}>
+                <div key={activity._id} className="activity-card">
                     <h3>{activity.activity}</h3>
                     <p>Duration: {activity.duration} minutes</p>
 
@@ -54,7 +55,9 @@ export const ActivityList = () => {
                     <p>Date: {new Date(activity.date).toLocaleDateString()}</p>
                     <p>Notes: {activity.notes}</p>
 
-                    <button onClick={() => handleDelete(activity._id)}>Delete</button>
+                    <button className="delete-btn" onClick={() => handleDelete(activity._id)}>
+                        Delete
+                    </button>
                 </div>
             ))}
         </div>
