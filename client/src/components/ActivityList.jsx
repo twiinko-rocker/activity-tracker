@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import '../styles/pages.css';
+import { Link } from "react-router-dom";
 
 export const ActivityList = () => {
     const [activities, setActivities] = useState([]);
@@ -46,7 +47,15 @@ export const ActivityList = () => {
         <div className="activity-info">
             <h2>Your Activities</h2>
 
-            {activities.map((activity) => (
+            {activities.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
+                    <p>No activities logged yet.</p>
+                    <Link to="/log-activity" style={{ color: '#007BFF', textDecoration: 'none' }}>
+                        Log your first activity!
+                    </Link>
+                </div>
+            ) : (
+            activities.map((activity) => (
                 <div key={activity._id} className="activity-card">
                     <h3>{activity.activity}</h3>
                     <p>Duration: {activity.duration} minutes</p>
@@ -59,7 +68,8 @@ export const ActivityList = () => {
                         Delete
                     </button>
                 </div>
-            ))}
+            ))
+        )}
         </div>
     );
 }

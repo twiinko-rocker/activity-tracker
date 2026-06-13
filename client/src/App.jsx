@@ -9,9 +9,11 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
 
   function handleLogout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/login");
   }
 
@@ -23,6 +25,11 @@ const Dashboard = () => {
           <Link to="/log-activity">+ Log Activity</Link>
           <button onClick={handleLogout}>Logout</button>
         </div>
+      </div>
+      <div className="welcome">
+        <h3 style={{ textAlign: 'center', color: '#333', marginBottom: '1rem' }}>
+          Welcome, {user?.name}!
+        </h3>
       </div>
       <div className="dashboard">
         <ActivityList />
