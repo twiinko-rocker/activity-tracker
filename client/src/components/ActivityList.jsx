@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 
 export const ActivityList = () => {
     const [activities, setActivities] = useState([]);
+    const totalSessions = activities.length;
+    const totalMinutes = activities.reduce((sum, activity) => sum + activity.duration, 0);
+    const totalDistance = activities.reduce((sum, activity) => sum + (activity.distance || 0), 0); // Optional: total distance if you want to display it
 
     useEffect(() => {
         async function fetchActivities() {
@@ -46,7 +49,21 @@ export const ActivityList = () => {
     return (
         <div className="activity-info">
             <h2>Your Activities</h2>
-
+            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+                <div className="activity-card" style={{ flex: 1, textAlign: 'center' }}>
+                    <h3>{totalSessions}</h3>
+                    <p>Total Sessions</p>
+                </div>
+                <div className="activity-card" style={{ flex: 1, textAlign: 'center' }}>
+                    <h3>{totalMinutes}</h3>
+                    <p>Total Minutes</p>
+                </div>
+                <div className="activity-card" style={{ flex: 1, textAlign: 'center' }}>
+                    <h3>{totalDistance} km</h3>
+                    <p>Total Distance</p>
+                </div>
+            </div>
+            
             {activities.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
                     <p>No activities logged yet.</p>
