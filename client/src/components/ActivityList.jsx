@@ -7,6 +7,9 @@ export const ActivityList = () => {
     const totalSessions = activities.length;
     const totalMinutes = activities.reduce((sum, activity) => sum + activity.duration, 0);
     const totalDistance = activities.reduce((sum, activity) => sum + (activity.distance || 0), 0); // Optional: total distance if you want to display it
+    const [filter, setFilter] = useState("All");
+    const filteredActivities = filter === "All" ? activities : activities.filter(activity => activity.activity === filter); // Filter activities based on selected activity type
+    const activityTypes = ["All", ...new Set(activities.map(activity => activity.activity))];
 
     useEffect(() => {
         async function fetchActivities() {
@@ -63,16 +66,25 @@ export const ActivityList = () => {
                     <p>Total Distance</p>
                 </div>
             </div>
+
+            <div style={{ marginBottom: '1rem' }}>
+                <label htmlFor="activity-filter" style={{ marginRight: '0.5rem' }}>Filter by Activity:</label>
+                <select id="activity-filter" value={filter} onChange={(e) => setFilter(e.target.value)}>
+                    {activityTypes.map((type) => (
+                        <option key={type} value={type}>{type}</option>
+                    ))}
+                </select>
+            </div>
             
-            {activities.length === 0 ? (
+            {filteredActivities.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
                     <p>No activities logged yet.</p>
-                    <Link to="/log-activity" style={{ color: '#007BFF', textDecoration: 'none' }}>
+                    <Link to="/log-activity" style= {{ color: '#007BFF', textDecoration: 'none' }}>
                         Log your first activity!
                     </Link>
                 </div>
             ) : (
-            activities.map((activity) => (
+            filteredActivities.map((activity) => (
                 <div key={activity._id} className="activity-card">
                     <h3>{activity.activity}</h3>
                     <p>Duration: {activity.duration} minutes</p>
