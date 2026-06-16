@@ -53,17 +53,17 @@ export const ActivityList = () => {
         <div className="activity-info">
             <h2>Your Activities</h2>
             <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
-                <div className="activity-card" style={{ flex: 1, textAlign: 'center' }}>
+                <div className="stat-card" style={{ flex: 1 }}>
                     <h3>{totalSessions}</h3>
-                    <p>Total Sessions</p>
+                    <p>Sessions</p>
                 </div>
-                <div className="activity-card" style={{ flex: 1, textAlign: 'center' }}>
+                <div className="stat-card" style={{ flex: 1 }}>
                     <h3>{totalMinutes}</h3>
-                    <p>Total Minutes</p>
+                    <p>Minutes</p>
                 </div>
-                <div className="activity-card" style={{ flex: 1, textAlign: 'center' }}>
-                    <h3>{totalDistance} km</h3>
-                    <p>Total Distance</p>
+                <div className="stat-card" style={{ flex: 1 }}>
+                    <h3>{totalDistance}</h3>
+                    <p>KM</p>
                 </div>
             </div>
 
