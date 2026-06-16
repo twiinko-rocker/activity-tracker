@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 
 export const ActivityList = () => {
     const [activities, setActivities] = useState([]);
-    const totalSessions = activities.length;
-    const totalMinutes = activities.reduce((sum, activity) => sum + activity.duration, 0);
-    const totalDistance = activities.reduce((sum, activity) => sum + (activity.distance || 0), 0); // Optional: total distance if you want to display it
-    const [filter, setFilter] = useState("All");
+       const [filter, setFilter] = useState("All");
     const filteredActivities = filter === "All" ? activities : activities.filter(activity => activity.activity === filter); // Filter activities based on selected activity type
+    const totalSessions = filteredActivities.length;
+    const totalMinutes = filteredActivities.reduce((sum, activity) => sum + activity.duration, 0);
+    const totalDistance = filteredActivities.reduce((sum, activity) => sum + (activity.distance || 0), 0); // Optional: total distance if you want to display it
+ 
     const activityTypes = ["All", ...new Set(activities.map(activity => activity.activity))];
 
     useEffect(() => {
@@ -52,6 +53,16 @@ export const ActivityList = () => {
     return (
         <div className="activity-info">
             <h2>Your Activities</h2>
+
+            <div style={{ marginBottom: '1rem' }}> 
+                <label htmlFor="activity-filter" style={{ marginRight: '0.5rem' }}>Filter by Activity:</label>
+                <select id="activity-filter" value={filter} onChange={(e) => setFilter(e.target.value)}>
+                    {activityTypes.map((type) => (
+                        <option key={type} value={type}>{type}</option>
+                    ))}
+                </select>
+            </div>
+
             <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
                 <div className="stat-card" style={{ flex: 1 }}>
                     <h3>{totalSessions}</h3>
@@ -65,15 +76,6 @@ export const ActivityList = () => {
                     <h3>{totalDistance}</h3>
                     <p>KM</p>
                 </div>
-            </div>
-
-            <div style={{ marginBottom: '1rem' }}>
-                <label htmlFor="activity-filter" style={{ marginRight: '0.5rem' }}>Filter by Activity:</label>
-                <select id="activity-filter" value={filter} onChange={(e) => setFilter(e.target.value)}>
-                    {activityTypes.map((type) => (
-                        <option key={type} value={type}>{type}</option>
-                    ))}
-                </select>
             </div>
             
             {filteredActivities.length === 0 ? (
