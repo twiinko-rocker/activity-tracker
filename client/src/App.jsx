@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import LogActivity from './pages/LogActivity';
 import { ActivityList } from './components/ActivityList';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const Dashboard = () => {
@@ -22,7 +22,6 @@ const Dashboard = () => {
       <div className="nav">
         <h2>🏃 Activity Tracker</h2>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <Link to="/log-activity">+ Log Activity</Link>
           <button onClick={handleLogout}>Logout</button>
         </div>
       </div>

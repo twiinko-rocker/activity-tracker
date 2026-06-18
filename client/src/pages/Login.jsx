@@ -81,9 +81,14 @@ function Login() {
         </div>
         {errors.server && <p>{errors.server}</p>}
         <button type="submit">Login</button>
-        <p><span style={{ color: '#666', fontSize: '0.9rem' }}>
-          Don't have an account? <a href="/register">Register here</a>
-        </span></p>
+        <p>
+          <span style={{ color: '#666', fontSize: '0.9rem', marginTop: '1rem', display: 'block' }}>
+            Don't have an account? <a href="/register">Register here</a>
+          </span>
+        </p>
+        <p style={{ fontSize: '0.75rem', color: '#888', marginTop: '1rem' }}>
+          Demo account: <strong>test@test.com</strong> / <strong>pass123456</strong>
+        </p>
       </form>
     </div>
   );

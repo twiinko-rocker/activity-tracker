@@ -57,6 +57,16 @@ function Register() {
   return (
     <div className="page">
       <h1>Register</h1>
+      <p style={{ 
+        fontSize: '0.75rem', 
+        color: '#888', 
+        marginBottom: '1rem',
+        padding: '0.5rem',
+        background: '#f9f9f9',
+        borderRadius: '4px'
+      }}>
+        ⚠️ This is a demo app. Please do not use real personal information or passwords you use elsewhere.
+      </p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name</label>

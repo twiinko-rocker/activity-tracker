@@ -52,7 +52,12 @@ export const ActivityList = () => {
 
     return (
         <div className="activity-info">
-            <h2>Your Activities</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <h2 style={{ margin: 0 }}>Your Activities</h2>
+                <Link to="/log-activity">
+                    <button style={{ fontSize: '0.85rem' }}>+ Log Activity</button>
+                </Link>
+            </div>
 
             <div style={{ marginBottom: '1rem' }}> 
                 <label htmlFor="activity-filter" style={{ marginRight: '0.5rem' }}>Filter by Activity:</label>

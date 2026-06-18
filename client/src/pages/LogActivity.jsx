@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../styles/pages.css';
+import { Link } from "react-router-dom";
 
 
 
@@ -78,6 +79,7 @@ function LogActivity() {
 
   return (
     <div className="page">
+      <Link to="/dashboard" style={{ fontSize: '0.85rem', color: '#888', marginBottom: '2rem' }}>← Back to Dashboard</Link>
       <h1>Log Activity</h1>
 
       <form onSubmit={handleSubmit}>
